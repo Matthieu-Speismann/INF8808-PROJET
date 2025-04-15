@@ -29,7 +29,7 @@ def viz_5(df, pays, season):
         height = 700,
         font=dict(family="Inter"),  # Définir la police "Inter"
         font_size=14,  # Définir la taille du texte à 14)
-        margin=dict(l=600, r=600, t=100, b=0),
+        margin=dict(l=500, r=500, t=100, b=0),
         plot_bgcolor = 'lightgrey', 
 
         xaxis=dict(type='category'),
