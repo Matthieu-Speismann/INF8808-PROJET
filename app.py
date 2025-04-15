@@ -1,11 +1,11 @@
 import dash
 import os
 from dash import html
-from code.visualisation_1.app import get_viz_1_html
-from code.visualisation_2.src.app import get_viz_2_html
-from code.visualisation_3.app import get_viz_3_html
-from code.visualisation_4.app import get_viz_4_html
-from code.visualisation_5.app import get_viz_5_html
+from project.visualisation_1.app import get_viz_1_html
+from project.visualisation_2.src.app import get_viz_2_html
+from project.visualisation_3.app import get_viz_3_html
+from project.visualisation_4.app import get_viz_4_html
+from project.visualisation_5.app import get_viz_5_html
 
 app = dash.Dash(__name__)
 app.title = "Projet INF8808"
