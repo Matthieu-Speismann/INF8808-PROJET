@@ -4,8 +4,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 from dash.dependencies import Input, Output
 
-import visualisation_5.preprocess as preprocess
-import visualisation_5.slopechart as slopechart
+import project.visualisation_5.preprocess as preprocess
+import project.visualisation_5.slopechart as slopechart
 
 df = preprocess.load_csv("all_athlete_games.csv")
 

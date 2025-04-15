@@ -1,6 +1,6 @@
 import circlify
 import plotly.graph_objects as go
-from visualisation_4.preprocess import load_csv
+from project.visualisation_4.preprocess import load_csv
 from dash import html, dcc
 import math
 import pandas as pd

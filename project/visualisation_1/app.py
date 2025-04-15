@@ -6,9 +6,9 @@ import plotly.graph_objects as go
 from dash.dependencies import Input, Output
 
 # Import de la visualisation 1 (vide pour l’instant)
-from visualisation_1.init import get_figure as viz1_get_figure
-import visualisation_1.preprocess as preprocess
-import visualisation_1.heatmap as heatmap
+from project.visualisation_1.init import get_figure as viz1_get_figure
+import project.visualisation_1.preprocess as preprocess
+import project.visualisation_1.heatmap as heatmap
 
 
 # Prétraitement des données pour la saison "Summer"

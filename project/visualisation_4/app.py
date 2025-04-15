@@ -1,7 +1,7 @@
 import dash
 from dash import dcc, html, Input, Output, callback
-from visualisation_4.init import get_output
-from visualisation_4.preprocess import load_csv  # utilisé pour charger le CSV des disciplines
+from project.visualisation_4.init import get_output
+from project.visualisation_4.preprocess import load_csv  # utilisé pour charger le CSV des disciplines
 
 def get_viz_4_html():
     return html.Div([

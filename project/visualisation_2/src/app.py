@@ -17,8 +17,8 @@ from dash.dependencies import Input, Output
 
 import plotly.graph_objects as go
 
-import visualisation_2.src.preprocess as preprocess
-import visualisation_2.src.bubble as bubble
+import project.visualisation_2.src.preprocess as preprocess
+import project.visualisation_2.src.bubble as bubble
 from pathlib import Path
 import os
 import pandas as pd 

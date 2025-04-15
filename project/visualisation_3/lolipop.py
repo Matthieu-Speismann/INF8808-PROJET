@@ -1,7 +1,7 @@
-import visualisation_3.hover_template as hover_template
+import project.visualisation_3.hover_template as hover_template
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from visualisation_3.hover_template import get_host_years_by_country, get_hover_template
+from project.visualisation_3.hover_template import get_host_years_by_country, get_hover_template
 
 def create_lollipop_figure(df, season, top_margin=240):
     host_years_map = get_host_years_by_country(season)

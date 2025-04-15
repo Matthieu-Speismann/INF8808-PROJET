@@ -1,7 +1,7 @@
 import dash
 from dash import dcc, html, Input, Output
 from init import get_output
-from preprocess import load_csv  # utilisé pour charger le CSV des disciplines
+from project.visualisation_4.integration.preprocess import load_csv  # utilisé pour charger le CSV des disciplines
 
 app = dash.Dash(__name__)
 app.title = "Projet INF8808 - Visualisation Textuelle"

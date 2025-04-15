@@ -1,7 +1,7 @@
 import dash
 from dash import html, dcc, Input, Output, callback
-import visualisation_3.preprocess_ete_hiver as preprocess_ete_hiver
-import visualisation_3.lolipop as lolipop
+import project.visualisation_3.preprocess_ete_hiver as preprocess_ete_hiver
+import project.visualisation_3.lolipop as lolipop
 
 # Initial load
 df = preprocess_ete_hiver.load_csv("all_athlete_games.csv")
