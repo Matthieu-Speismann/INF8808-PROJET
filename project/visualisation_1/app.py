@@ -78,6 +78,21 @@ def get_viz_1_html():
                     displayModeBar=False  # Masquer la barre d'outils
                 )
             )
+        ]),
+        html.Div([
+            html.P([
+                "When analyzing Olympic trends, it becomes clear that certain countries have long held dominance in specific sports. The United States, for example, continues to lead the way in basketball and swimming, consistently outperforming other nations with a remarkable number of medals.",
+                html.Br(), html.Br(),
+                "But what happens when a country hosts the Games? In 2008, when China welcomed the world to Beijing, its medal tally saw a dramatic increase—jumping from 12 to 24 medals. Was this surge a result of improved athletic performance, a coincidence, or does hosting the Olympics offer a genuine competitive edge?",
+                html.Br(), html.Br(),
+                "The data suggests that the home-field advantage might be more than just a myth."],
+                style={
+                    'textAlign': 'center',  # Centrer le texte
+                    'fontFamily': 'Inter',
+                    'color': '#000000'
+                },
+            className="viz-description"
+            )
         ],
         className="centered"
         )
