@@ -8,6 +8,7 @@ from visualisation_4.app import get_viz_4_html
 from visualisation_5.app import get_viz_5_html
 
 app = dash.Dash(__name__)
+server = app.server 
 app.title = "Projet INF8808"
 
 app.layout = html.Div([
