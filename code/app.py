@@ -1,4 +1,5 @@
 import dash
+import os
 from dash import html
 from visualisation_1.app import get_viz_1_html
 from visualisation_2.src.app import get_viz_2_html
@@ -89,4 +90,5 @@ app.layout = html.Div([
 ])
 
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8050))
     app.run(host ="0.0.0.0", port=port)
