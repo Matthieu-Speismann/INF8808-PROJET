@@ -87,9 +87,8 @@ def get_viz_1_html():
                 html.Br(), html.Br(),
                 "The data suggests that the home-field advantage might be more than just a myth."],
                 style={
-                    'textAlign': 'center',  # Centrer le texte
-                    'fontFamily': 'Inter',
-                    'color': '#000000'
+                    'textAlign': 'justify',  # Justifier le texte
+                    'fontFamily': 'Inter'
                 },
             className="viz-description"
             )

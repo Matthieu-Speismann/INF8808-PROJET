@@ -94,17 +94,23 @@ def get_viz_2_html():
             html.H1('🥇 1. Is Olympic Success Reserved for Superpowers?', style={'textAlign': 'center', 'marginBottom': '20px', "fontFamily": "Playfair Display"}),
             html.P(
             "Are the same nations always at the top of the podium — and why? "
-            "From the Cold War era to modern-day dominance, we explore how wealth, population, and historical presence shape Olympic power hierarchies — and whether the gap is growing or narrowing.",
+            "From the Cold War era to modern-day dominance, we explore how wealth, population, and historical presence " \
+            "shape Olympic power hierarchies — and whether the gap is growing or narrowing.",
             style={"textAlign": "justify", "backgroundColor": "#fdfdfd",'marginBottom': '40px',"fontFamily": "Inter"},
             className="viz-description"
             ),
             html.H2("Total Medals / PIB per Capita ($ USD)", style={"textAlign": "center", "color":"#0085C7","fontFamily": "Playfair Display"}),
             html.P([
-                "Behind every Olympic medal lies a complex mix of factors that influence success on the global stage. While athleticism and training are key, a country’s population size, wealth, and even its climate may play an unexpected role in determining who takes home the gold. ",
+                "Behind every Olympic medal lies a complex mix of factors that influence success on the global stage. "
+                "While athleticism and training are key, a country’s population size, wealth, and even its climate may "
+                "play an unexpected role in determining who takes home the gold. ",
                 html.Br(), html.Br(),
-                "Larger populations might have more athletes to choose from, but do they really win more medals ? Wealthier nations often have better resources for training, but does that translate into Olympic glory ? And how do the climates of countries impact their performance in summer versus winter Games ? ",
+                "Larger populations might have more athletes to choose from, but do they really win more medals ? "
+                "Wealthier nations often have better resources for training, but does that translate into Olympic glory ? "
+                "And how do the climates of countries impact their performance in summer versus winter Games ? ",
                 html.Br(), html.Br(),
-                "This visualization explores the relationship between GDP, population, and climate with Olympic performance over time, revealing fascinating trends and geographical insights that go beyond the sports themselves."
+                "This visualization explores the relationship between GDP, population, and climate with Olympic performance over time, "
+                "revealing fascinating trends and geographical insights that go beyond the sports themselves."
                 ],
             style={"textAlign": "justify","fontFamily": "Inter"},
             className="viz-description"
@@ -146,5 +152,31 @@ def get_viz_2_html():
                 displayModeBar=False
             )),
             ])
-        ])
+        ]),
+        
+        html.Div([
+            html.P([
+                "The graph on the left illustrates the number of medals won per Olympic Games, segmented by GDP and categorized by "
+                "continents. An analysis of the data from 1945 to 1990 reveals no distinct trend in medal distribution. However, "
+                "when the graph is animated to cover the period from 1991 to 2020, a clear linear trend emerges. This shift suggests "
+                "a developing correlation between a country's GDP and its Olympic medal count in recent decades.",
+                html.Br(), html.Br(),
+                "The graph on the right displays the number of Olympic medals won per Games in relation to GDP, grouped by climate "
+                "zones. From 1945 to 1990, both the Summer and Winter Olympics show no clear correlation between GDP and medal count. "
+                "However, when the graph animates to reflect the period from 1991 to 2020, a linear trend becomes apparent. "
+                "This suggests that, during this more recent period, a relationship between economic power and Olympic success has "
+                "emerged.",
+                html.Br(), html.Br(),
+                "Other correlations can be identified by exploring different time periods and types of Olympic Games—Summer or Winter. "
+                "Were you able to spot them?"],
+                style={
+                    'textAlign': 'justify',  # Centrer le texte
+                    'fontFamily': 'Inter'
+                },
+            className="viz-description"
+            )
+        ],
+        className="centered"
+        )
+
         ])

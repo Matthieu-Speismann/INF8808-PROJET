@@ -66,6 +66,7 @@ def get_viz_5_html():
                 "2. France have the opposite results, with most of their participations reflecting a stable level, both in Summer and Winter. 2 editions seems to be an exception: 2020 in Summer and 2010 in Winter.",
                 html.Br(), html.Br(),
                 "3. Brasil is interesting because of its progression throught the years in the Summer Games. With time, it scores more and more point, and it reached a breakthrough since 2016, when they hosted the Summer Olympic Games. However since this edition, they also are a bit dependant to some multi-medalist, when they were not in the past dates.",],
+            style={"textAlign": "justify", "fontFamily": "Inter"},
             className="viz-description"
             )
         ],
