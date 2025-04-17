@@ -10,7 +10,8 @@ def get_viz_4_html():
             html.P([
                 "Does being the host country boost your performance — or is it just a myth?",
                 html.Br(),
-                "We compare how countries perform at home versus abroad to reveal if hosting gives athletes a psychological or logistical edge. The results may surprise you.",
+                "We compare how countries perform at home versus abroad to reveal if hosting gives athletes a psychological "
+                "or logistical edge. The results may surprise you.",
             ], style={"textAlign": "justify", "backgroundColor": "#fdfdfd", 'marginBottom': '40px',"fontFamily": "Inter"},
                 className="viz-description"
             )
@@ -20,11 +21,16 @@ def get_viz_4_html():
             html.H2("Where are Olympic Champions from ? A Global Map of Sport Legends", style={"textAlign": "center",'color': '#F4C300', 'marginBottom': '40px',"fontFamily": "Playfair Display"}),
             html.Div(
                 html.P([
-                    "Behind every Olympic champion, there’s not just talent — there’s also a country, a culture, and sometimes, a system built to create greatness.",
+                    "Behind every Olympic champion, there’s not just talent — there’s also a country, a culture, and sometimes, "
+                    "a system built to create greatness.",
                     html.Br(),html.Br(),
-                    "Some nations seem to have an extraordinary ability to produce legendary athletes — those rare competitors who collect medal after medal and leave a lasting mark on Olympic history. But are these sporting icons just isolated cases of individual brilliance? Or do certain countries consistently shape and nurture these exceptional talents?",
+                    "Some nations seem to have an extraordinary ability to produce legendary athletes — those rare competitors "
+                    "who collect medal after medal and leave a lasting mark on Olympic history. But are these sporting icons just "
+                    "isolated cases of individual brilliance? Or do certain countries consistently shape and nurture these exceptional "
+                    "talents?",
                     html.Br(),html.Br(),
-                    "This visualization dives into the origins of the most decorated Olympians — athletes who have won more than 5 medals in their career — to uncover which countries truly dominate when it comes to producing greatness.",
+                    "This visualization dives into the origins of the most decorated Olympians — athletes who have won more than 5 "
+                    "medals in their career — to uncover which countries truly dominate when it comes to producing greatness.",
                     html.Br(),html.Br(),
                     "Talent might be universal… but is Olympic glory?",
                     ], style={

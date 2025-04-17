@@ -30,13 +30,18 @@ def get_viz_1_html():
             ),
             html.Div(
                 html.P([
-                    "Every four years, the Olympic Games bring together the best athletes from around the world. But behind the medals and records lies another competition — one between nations, strategy, and sometimes... opportunity. ",
+                    "Every four years, the Olympic Games bring together the best athletes from around the world. But behind the "
+                    "medals and records lies another competition — one between nations, strategy, and sometimes... opportunity. ",
                     html.Br(), html.Br(),
-                    "Have certain countries historically dominated the same sports over and over again ? Are powerhouses like the USA, China, or Russia unbeatable in specific disciplines ? And what happens when a country hosts the Olympics — do they influence the list of sports to improve their chances of winning more medals ? ",
+                    "Have certain countries historically dominated the same sports over and over again ? Are powerhouses like the USA, "
+                    "China, or Russia unbeatable in specific disciplines ? And what happens when a country hosts the Olympics — do they "
+                    "influence the list of sports to improve their chances of winning more medals ? ",
                     html.Br(), html.Br(),
-                    "Adding new sports, removing old ones, or adjusting event formats can sometimes raise eyebrows. Is it coincidence, or a clever tactic to tip the balance in favor of the host nation ? ",
+                    "Adding new sports, removing old ones, or adjusting event formats can sometimes raise eyebrows. Is it coincidence, "
+                    "or a clever tactic to tip the balance in favor of the host nation ? ",
                     html.Br(), html.Br(),
-                    "This visualization explores decades of Olympic history to uncover patterns of dominance, national specialties, and the possible impact of hosting the Games. ",
+                    "This visualization explores decades of Olympic history to uncover patterns of dominance, national specialties, "
+                    "and the possible impact of hosting the Games. ",
                     html.Br(), html.Br(),
                     "Let’s see what the data reveals."],
                     style={
@@ -81,9 +86,13 @@ def get_viz_1_html():
         ]),
         html.Div([
             html.P([
-                "When analyzing Olympic trends, it becomes clear that certain countries have long held dominance in specific sports. The United States, for example, continues to lead the way in basketball and swimming, consistently outperforming other nations with a remarkable number of medals.",
+                "When analyzing Olympic trends, it becomes clear that certain countries have long held dominance in specific sports. "
+                "The United States, for example, continues to lead the way in basketball and swimming, consistently outperforming other "
+                "nations with a remarkable number of medals.",
                 html.Br(), html.Br(),
-                "But what happens when a country hosts the Games? In 2008, when China welcomed the world to Beijing, its medal tally saw a dramatic increase—jumping from 12 to 24 medals. Was this surge a result of improved athletic performance, a coincidence, or does hosting the Olympics offer a genuine competitive edge?",
+                "But what happens when a country hosts the Games? In 2008, when China welcomed the world to Beijing, its medal tally "
+                "saw a dramatic increase—jumping from 12 to 24 medals. Was this surge a result of improved athletic performance, a "
+                "coincidence, or does hosting the Olympics offer a genuine competitive edge?",
                 html.Br(), html.Br(),
                 "The data suggests that the home-field advantage might be more than just a myth."],
                 style={
