@@ -53,7 +53,9 @@ def get_viz_3_html():
             ], style={'textAlign': 'center', 'margin': '20px 20px'}),
             dcc.Graph(id='lollipop-graph', figure=fig)
         ]),
-        
+        """ 
+        TODO Bloc de texte explicatif de la viz 3 a modifier 
+
         html.Div([
             html.P([
                 "Here are some interesting examples:",
@@ -68,7 +70,7 @@ def get_viz_3_html():
             )
         ],
         className="centered"
-        )
+        )"""
     ])
 
 
