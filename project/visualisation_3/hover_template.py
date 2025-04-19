@@ -2,11 +2,12 @@
     Provides the templates for the tooltips in the lollipop charts.
 '''
 
+# Fonction pour obtenir les années où chaque pays a accueilli les Jeux Olympiques
 def get_host_years_by_country(season):
-    # Summer Olympics
+    # Dictionnaire pour les Jeux Olympiques d'été
     summer_map = {
-        '1945-1991': {
-            "United Kingdom": [1948],
+        '1945-1991': {  # Période de la Guerre froide
+            "United Kingdom": [1948],  # Année où le Royaume-Uni a accueilli
             "Finland": [1952],
             "Australia": [1956],
             "Italy": [1960],
@@ -18,7 +19,7 @@ def get_host_years_by_country(season):
             "United States": [1984],
             "South Korea": [1988]
         },
-        '1992-2020': {
+        '1992-2020': {  # Période post-Guerre froide
             "Spain": [1992],
             "United States": [1996],
             "Australia": [2000],
@@ -30,20 +31,20 @@ def get_host_years_by_country(season):
         }
     }
 
-    # Winter Olympics
+    # Dictionnaire pour les Jeux Olympiques d'hiver
     winter_map = {
-        '1945-1991': {
+        '1945-1991': {  # Période de la Guerre froide
             "Switzerland": [1948],
             "Norway": [1952],
             "Italy": [1956],
-            "United States": [1960, 1980],
-            "Austria": [1964, 1976],
+            "United States": [1960, 1980],  # Deux éditions accueillies par les États-Unis
+            "Austria": [1964, 1976],  # Deux éditions accueillies par l'Autriche
             "France": [1968],
             "Japan": [1972],
             "Bosnia and Herzegovina": [1984],
             "Canada": [1988]
         },
-        '1992-2020': {
+        '1992-2020': {  # Période post-Guerre froide
             "France": [1992],
             "Norway": [1994],
             "Japan": [1998],
@@ -55,31 +56,40 @@ def get_host_years_by_country(season):
         }
     }
 
+    # Retourne le dictionnaire correspondant à la saison (été ou hiver)
     return summer_map if season == "Summer" else winter_map
 
 
+# Fonction pour générer un modèle de tooltip (info-bulle) pour les graphiques
 def get_hover_template(metric_label, is_host):
     """
-    Returns a hover template string for host or away points.
+    Retourne une chaîne de caractères pour un modèle de tooltip.
 
     Args:
-        metric_label (str): Label of the metric (e.g., 'athletes', 'medals')
-        is_host (bool): True if the point is for a host value, False for away
+        metric_label (str): Libellé de la métrique (par ex., 'athletes', 'medals')
+        is_host (bool): True si le point correspond à un pays hôte, False sinon
 
     Returns:
-        str: A valid Plotly hovertemplate
+        str: Un modèle de tooltip valide pour Plotly
     """
-    if is_host:
+    if is_host:  # Si le pays est un hôte
         template = (
+            # Début du modèle avec un style spécifique
             "<span style='font-family:Roboto Slab'><extra></extra><br>"
+            # Affiche le nom du pays
             "<b>Country</b>: %{customdata[0]}<br>"
+            # Affiche la valeur de la métrique
             "<b>" + metric_label.capitalize() + "</b>: %{x}<br>"
+            # Affiche les éditions accueillies par le pays
             "<b>Home editions</b>: %{customdata[1]}"
         )
-    else:
+    else:  # Si le pays n'est pas un hôte
         template = (
+            # Début du modèle avec un style spécifique
             "<span style='font-family:Roboto Slab'><extra></extra><br>"
+            # Affiche le nom du pays
             "<b>Country</b>: %{customdata[0]}<br>"
+            # Affiche la valeur de la métrique
             "<b>" + metric_label.capitalize() + "</b>: %{x}<br>"
         )
-    return template
+    return template  # Retourne le modèle de tooltip

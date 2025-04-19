@@ -1,9 +1,9 @@
-import circlify
-import plotly.graph_objects as go
-from project.visualisation_4.preprocess import load_csv
-from dash import html, dcc
+import circlify  # Bibliothèque pour créer des graphiques de cercles imbriqués
+import plotly.graph_objects as go  # Bibliothèque pour créer des graphiques interactifs
+from project.visualisation_4.preprocess import load_csv  # Fonction personnalisée pour charger des fichiers CSV
+from dash import html, dcc  # Composants Dash pour créer des interfaces web
 import math
-import pandas as pd
+import pandas as pd  # Bibliothèque pour manipuler des données tabulaires
 
 def split_name(full_name):
     """
@@ -21,91 +21,89 @@ def split_name(full_name):
 
 def get_output(season, discipline):
     """
-    Retourne une représentation HTML combinant :
-      - Pour chaque pays (du fichier top10_pays_{season.lower()}.csv) :
-          • Un graphique "packed circle chart" où chaque cercle représente un athlète,
-            la taille du cercle est proportionnelle au nombre de médailles obtenues,
-            et le cercle est coloré en rouge si l’athlète exerce la discipline sélectionnée (insensible à la casse),
-            sinon en bleu.
-          • Sur le graphique, l'annotation affiche le nom de famille suivi d'un saut de ligne et du total de médailles entre parenthèses.
-          • En hover, une bulle affiche (avec des sauts de ligne via "<br>") :
-                Nom : [nom de famille]<br>
-                Prénom : [prénom]<br>
-                Pays : [pays]<br>
-                Discipline : [discipline]<br>
-                Total de médailles : [nombre]
-      - Les graphiques sont affichés côte à côte avec trois par ligne.
+    Génère une visualisation HTML pour une saison et une discipline données.
     """
-    # Charger les données
-    df_pays = load_csv(f"top10_pays_{season.lower()}.csv")
-    df_athletes_top = load_csv(f"top10_athletes_{season.lower()}.csv")
-    # Charger le CSV complet pour le calcul détaillé des médailles
-    all_athletes = load_csv("all_athlete_games.csv")
-    # Filtrer sur l'année >= 1992
+    # Charger les données des fichiers CSV
+    df_pays = load_csv(f"top10_pays_{season.lower()}.csv")  # Top 10 pays
+    df_athletes_top = load_csv(f"top10_athletes_{season.lower()}.csv")  # Top 10 athlètes
+    all_athletes = load_csv("all_athlete_games.csv")  # Données complètes des athlètes
+
+    # Filtrer les données pour inclure uniquement les années >= 1992
     if "Year" in all_athletes.columns:
         all_athletes = all_athletes[all_athletes["Year"] >= 1992]
     elif "année" in all_athletes.columns:
         all_athletes = all_athletes[all_athletes["année"] >= 1992]
     
-    # Colonnes utilisées
+    # Définir les noms des colonnes en fonction des fichiers chargés
     country_col = "pays" if "pays" in df_pays.columns else "NOC"
     athlete_country_col = "pays"
     name_col = "nom_norm"
     medal_col = "médaille"
     disc_col = "discipline"
     
+    # Liste pour stocker les composants HTML de sortie
     output_components = []
     output_components.append(html.H2(f"Visualisation pour {season} - Discipline sélectionnée : {discipline}"))
     output_components.append(html.P("Top 10 pays par score :"))
     
-    country_components = []
+    country_components = []  # Liste pour stocker les composants HTML pour chaque pays
     
+    # Parcourir les pays du top 10
     for _, row in df_pays.iterrows():
-        country = row[country_col]
-        score = row.get("score", row.get("Score", ""))
-        header = html.H3(f"Pays : {country} - Score : {score}")
+        country = row[country_col]  # Nom du pays
+        score = row.get("score", row.get("Score", ""))  # Score du pays
+        header = html.H3(f"Pays : {country} - Score : {score}")  # En-tête pour le pays
         
+        # Filtrer les athlètes du pays
         df_country = df_athletes_top[df_athletes_top[athlete_country_col] == country]
         if df_country.empty:
+            # Si aucun athlète trouvé, afficher un message
             comp = html.Div([header, html.P("Aucun athlète trouvé.")],
                             style={'marginBottom': '40px', 'border': '1px solid #ccc', 'padding': '10px'})
             country_components.append(comp)
             continue
         
-        # Construire la liste des athlètes en utilisant "nom_norm"
+        # Construire une liste des athlètes avec leurs informations
         athletes = []
         for _, arow in df_country.iterrows():
             try:
-                medals = float(arow.get(medal_col, 0))
+                medals = float(arow.get(medal_col, 0))  # Nombre de médailles
             except:
                 medals = 0.0
             athletes.append({
-                "name": arow.get(name_col, "Inconnu"),
-                "discipline": arow.get(disc_col, "Non renseigné"),
-                "medals": medals
+                "name": arow.get(name_col, "Inconnu"),  # Nom de l'athlète
+                "discipline": arow.get(disc_col, "Non renseigné"),  # Discipline
+                "medals": medals  # Nombre de médailles
             })
         
+        # Trier les athlètes par nombre de médailles décroissant
         athletes = sorted(athletes, key=lambda x: x["medals"], reverse=True)
-        medal_values = [ath["medals"] for ath in athletes]
+        medal_values = [ath["medals"] for ath in athletes]  # Liste des médailles pour les cercles
         
+        # Générer les cercles imbriqués avec circlify
         circles = circlify.circlify(
             medal_values,
             show_enclosure=False,
             target_enclosure=circlify.Circle(x=0, y=0, r=1)
         )
-        circles = sorted(circles, key=lambda c: c.r, reverse=True)
+        circles = sorted(circles, key=lambda c: c.r, reverse=True)  # Trier les cercles par taille
         
-        TAILLE = 450
-        fig = go.Figure()
-        fig.update_xaxes(range=[-1.1, 1.1], showgrid=False, zeroline=False, visible=False)
-        fig.update_yaxes(range=[-1.1, 1.1], showgrid=False, zeroline=False, visible=False)
+        TAILLE = 450  # Taille du graphique
+        fig = go.Figure()  # Créer une figure Plotly
+        fig.update_xaxes(range=[-1.1, 1.1], showgrid=False, zeroline=False, visible=False)  # Configurer l'axe X
+        fig.update_yaxes(range=[-1.1, 1.1], showgrid=False, zeroline=False, visible=False)  # Configurer l'axe Y
         
+        # Variables pour les données du graphique
         x_scatter, y_scatter, hover_text_list, marker_sizes, marker_color_list = [], [], [], [], []
         for ath, circle in zip(athletes, circles):
+            # Séparer le prénom et le nom de l'athlète
             first_name, last_name = split_name(ath["name"])
-            total_medals = int(ath["medals"])
+            total_medals = int(ath["medals"])  # Total des médailles
+            # Déterminer la couleur du cercle (rouge pour la discipline sélectionnée, sinon bleu)
             color = "red" if ath["discipline"].lower() == discipline.lower() else "blue"
-            x, y, r = circle.x, circle.y, circle.r
+            x, y, r = circle.x, circle.y, circle.r  # Coordonnées et rayon du cercle
+            
+            # Ajouter un cercle à la figure
             fig.add_shape(
                 type="circle",
                 xref="x", yref="y",
@@ -114,7 +112,7 @@ def get_output(season, discipline):
                 fillcolor=color,
                 opacity=0.5
             )
-            # Annotation affichant le nom de famille suivi d'un saut de ligne et du total de médailles entre parenthèses
+            # Ajouter une annotation avec le nom de famille et le total de médailles
             fig.add_annotation(
                 x=x, y=y,
                 text=f"{last_name}<br>({total_medals})",
@@ -122,26 +120,29 @@ def get_output(season, discipline):
                 font=dict(color="white", size=10)
             )
             
-            # Calculer la répartition détaillée des médailles pour cet athlète depuis all_athletes
+            # Calculer les détails des médailles pour cet athlète
             df_ath = all_athletes[
                 (all_athletes["Name"] == ath["name"]) &
                 (all_athletes["Season"] == season) &
                 (all_athletes["Sport"] == ath["discipline"])
             ]
-            # Ici, on affiche le total directement
+            # Calculer le total des médailles (or, argent, bronze)
             total = int((df_ath["Medal"] == "Gold").sum() + (df_ath["Medal"] == "Silver").sum() + (df_ath["Medal"] == "Bronze").sum())
+            # Texte pour le survol
             hover_text = (
                 f"<b>Nom :</b> {last_name}<br>"
                 f"<b>Prénom :</b> {first_name}<br>"
                 f"<b>Pays :</b> {country}<br>"
                 f"<b>Discipline :</b> {ath['discipline']}"
             )
+            # Ajouter les données pour le scatter plot
             x_scatter.append(x)
             y_scatter.append(y)
             hover_text_list.append(hover_text)
             marker_sizes.append(r * 200)
             marker_color_list.append(color)
         
+        # Ajouter un scatter plot invisible pour gérer les survols
         fig.add_trace(go.Scatter(
             x=x_scatter,
             y=y_scatter,
@@ -156,6 +157,7 @@ def get_output(season, discipline):
             showlegend=False
         ))
         
+        # Configurer la mise en page du graphique
         fig.update_layout(
             width=TAILLE, height=TAILLE,
             font=dict(family="Inter"),  # Définir la police "Inter"
@@ -164,19 +166,21 @@ def get_output(season, discipline):
             plot_bgcolor="white"
         )
         
+        # Créer un composant HTML pour le graphique
         graph_component = dcc.Graph(figure=fig)
         comp = html.Div([header, graph_component],
                         style={'marginBottom': '40px', 'border': '1px solid #ccc', 'padding': '10px', 'width': f'{TAILLE}px'})
         country_components.append(comp)
     
+    # Organiser les graphiques par lignes (3 par ligne)
     rows = []
     for i in range(0, len(country_components), 3):
         row = html.Div(country_components[i:i+3],
                        style={'display': 'flex', 'flexWrap': 'wrap', 'justifyContent': 'space-around'})
         rows.append(row)
     
+    # Ajouter les composants finaux à la sortie
     output_components = [
-        # html.H2(f"Visualisation pour {season} - Discipline sélectionnée : {discipline}"),
         html.P("Top 10 pays par score (or = 3 pts / argent = 2 pts / bronze = 1 pt)"),
         html.Div(rows)
     ]

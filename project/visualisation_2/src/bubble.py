@@ -2,10 +2,10 @@
     This file contains the code for the bubble plot.
 '''
 
-import plotly.express as px
-import math
+import plotly.express as px  # Importing Plotly Express for creating visualizations
+import math  # Importing math module (not used in the current code)
 
-import project.visualisation_2.src.hover_template as hover_template
+import project.visualisation_2.src.hover_template as hover_template  # Importing custom hover template module
 
 
 def get_plot(df, graph_id: int = 1):
@@ -25,25 +25,27 @@ def get_plot(df, graph_id: int = 1):
         Returns:
             The generated figure
     '''
-    # TODO : Define figure with animation
-    # To scale markers between the desired max and min sizes (since no min_size param exists in px.scatter)
+    # Calculate the minimum and maximum population values in the dataframe
     min, max = df['Population'].min(), df['Population'].max()
+    
+    # Scale marker sizes between 3 and 200 based on population values
     df['marker_size'] = 3 + ((df['Population'] - min) / (max - min)) * (200 - 3)
 
+    # Create a scatter plot with animation frames for different years
     fig = px.scatter(
         df,
-        x="PIB_per_Capita",
-        y="nb_medals",
-        animation_frame="Year_Group",
-        size="marker_size",
-        size_max=50,
-        color="continent" if graph_id == 1 else "Climate",
-        color_discrete_sequence=px.colors.qualitative.Set1,
-        log_x=True,
-        log_y=True,
-        range_x=[100, 130000],
-        range_y=[0.5, 800],
-        custom_data=["Region", "Population", "continent", "Climate"]
+        x="PIB_per_Capita",  # X-axis: GDP per capita
+        y="nb_medals",  # Y-axis: Number of medals
+        animation_frame="Year_Group",  # Animation based on year groups
+        size="marker_size",  # Marker size based on scaled population
+        size_max=50,  # Maximum marker size
+        color="continent" if graph_id == 1 else "Climate",  # Color by continent or climate
+        color_discrete_sequence=px.colors.qualitative.Set1,  # Use Set1 color scale
+        log_x=True,  # Logarithmic scale for x-axis
+        log_y=True,  # Logarithmic scale for y-axis
+        range_x=[100, 130000],  # X-axis range
+        range_y=[0.5, 800],  # Y-axis range
+        custom_data=["Region", "Population", "continent", "Climate"]  # Additional data for hover templates
     )
 
     return fig
@@ -61,9 +63,10 @@ def update_animation_hover_template(fig):
             The updated figure
     '''
 
-    # TODO : Set the hover template
+    # Update the hover template for the main figure traces
     fig.update_traces(hovertemplate=hover_template.get_bubble_hover_template())
 
+    # Update the hover template for each trace in each animation frame
     for frame in fig.frames:
         for trace in frame.data:
             trace.hovertemplate = hover_template.get_bubble_hover_template()
@@ -80,34 +83,33 @@ def update_animation_menu(fig, graph_id: int = 1):
         Returns
             The updated figure
     '''
-    # TODO : Update animation menu
-
-    # Retirer le menu précédent:
+    # Remove the default animation menu
     fig.layout.pop("updatemenus", None)
 
+    # Add a custom animation menu with a single "Animate" button
     fig.update_layout(
         updatemenus=[
             {
                 "buttons": [
                     {
                         "args": [None, {"frame": {"duration": 500, "redraw": True}, "fromcurrent": False, 'visible': True}],
-                        "label": "Animate",
-                        "method": "animate"
+                        "label": "Animate",  # Label for the button
+                        "method": "animate"  # Method to trigger animation
                     },
                 ],
-                "direction": "left",
-                "pad": {"r": 10, "t": 87},
-                "showactive": False,
-                "type": "buttons",
-                "x": 0.09,
-                "xanchor": "right",
-                "y": 0.03,
-                "yanchor": "top"
+                "direction": "left",  # Direction of the menu
+                "pad": {"r": 10, "t": 87},  # Padding for positioning
+                "showactive": False,  # Disable active state for buttons
+                "type": "buttons",  # Type of menu
+                "x": 0.09,  # X position of the menu
+                "xanchor": "right",  # Anchor position for x
+                "y": 0.03,  # Y position of the menu
+                "yanchor": "top"  # Anchor position for y
             }
         ],
         sliders=[{
             "currentvalue": {
-                "prefix": "Data for year: ",
+                "prefix": "Data for year: ",  # Prefix for the current year slider
             }
         }]
     )
@@ -123,8 +125,10 @@ def update_axes_labels(fig):
         Returns:
             The updated figure
     '''
-    # TODO : Update labels
+    # Set the title for the x-axis
     fig.update_xaxes(title="PIB par Capita ($ USD)")
+    
+    # Set the title for the y-axis
     fig.update_yaxes(title="Médailles par jeux olympiques")
     return fig
 
@@ -136,10 +140,10 @@ def update_template(fig):
 
         Args:
             fig: The figure to update
-        Returns
+        Returns:
             The updated figure
     '''
-    # TODO : Update template
+    # Set the layout template to 'simple_white'
     fig.update_layout(template='simple_white')
     return fig
 
@@ -153,6 +157,6 @@ def update_legend(fig):
         Returns:
             The updated figure
     '''
-    # TODO : Update legend
+    # Update the legend title text
     fig.update_layout(legend_title_text="Legende")
     return fig

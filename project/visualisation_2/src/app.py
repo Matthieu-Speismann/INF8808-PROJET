@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 
 '''
@@ -10,6 +9,7 @@
     This file contains the source code for TP4.
 '''
 
+# Importation des modules nécessaires pour Dash et Plotly
 from dash import callback
 import dash_html_components as html
 import dash_core_components as dcc
@@ -17,28 +17,33 @@ from dash.dependencies import Input, Output
 
 import plotly.graph_objects as go
 
+# Importation des modules personnalisés pour le prétraitement et les graphiques
 import project.visualisation_2.src.preprocess as preprocess
 import project.visualisation_2.src.bubble as bubble
 from pathlib import Path
 import os
 import pandas as pd 
 
+# Définition des chemins vers les fichiers de données
 DATA_FOLDER = Path(os.path.abspath(__file__)).parent
 PATH_PROCESSED_NON_SEASONAL_DATA = DATA_FOLDER / "vis_2_processed_data_1.csv"
 PATH_PROCESSED_SEASONAL_DATA = DATA_FOLDER / "vis_2_processed_data_2.csv"
 
-# create fig for first graph without seasons
+# Fonction pour générer une figure Plotly à partir d'un DataFrame
 def generate_fig(df, graph_id: int = 1):
+    # Conversion des colonnes en types numériques
     df["Population"] = pd.to_numeric(df["Population"] , errors="coerce")
     df["nb_medals"] = pd.to_numeric(df["nb_medals"] , errors="coerce")
     df["PIB_per_Capita"] = pd.to_numeric(df["PIB_per_Capita"] , errors="coerce")
 
+    # Arrondir les décimales et trier les données selon le type de graphique
     df = preprocess.round_decimals(df)
     if graph_id == 1:
         df = preprocess.sort_dy_by_yr_continent(df)
     else:
         df = preprocess.sort_dy_by_yr_climate(df)
 
+    # Génération et personnalisation du graphique
     fig = bubble.get_plot(df, graph_id)
     fig = bubble.update_animation_hover_template(fig)
     fig = bubble.update_animation_menu(fig)
@@ -46,30 +51,36 @@ def generate_fig(df, graph_id: int = 1):
     fig = bubble.update_template(fig)
     fig = bubble.update_legend(fig)
 
+    # Mise à jour des dimensions et des paramètres de mise en page
     fig.update_layout(height=650,
                       width=650,
                       font=dict(family="Inter"),  # Définir la police "Inter"
-                      font_size=14)  # Définir la taille du texte à 14)
+                      font_size=14)  # Définir la taille du texte à 14
     fig.update_layout(dragmode=False)
 
     return fig
 
+# Chargement des données prétraitées
 non_sesonal_df = preprocess.get_df(PATH_PROCESSED_NON_SEASONAL_DATA)
 seasonal_df = preprocess.get_df(PATH_PROCESSED_SEASONAL_DATA)
+
+# Génération des figures pour les deux graphiques
 fig1 = generate_fig(non_sesonal_df, 1)
 fig2 = generate_fig(seasonal_df, 2)
 
+# Fonction pour mettre à jour le graphique en fonction des saisons sélectionnées
 def update_figure(selected_seasons):
-    # Filter the dataframe based on checkbox selection
+    # Filtrer les données selon les saisons sélectionnées
     if len(selected_seasons) == 2:
         filtered_df = non_sesonal_df
     else:
         print(selected_seasons)
         filtered_df = seasonal_df[seasonal_df['Season'] == selected_seasons[0]]
     
+    # Trier les données par climat
     filtered_df = preprocess.sort_dy_by_yr_climate(filtered_df)
 
-    # Rebuild the figure with the filtered data
+    # Recréer le graphique avec les données filtrées
     fig = bubble.get_plot(filtered_df, 2)
     fig = bubble.update_animation_hover_template(fig)
     fig = bubble.update_animation_menu(fig)
@@ -79,19 +90,23 @@ def update_figure(selected_seasons):
     fig.update_layout(height=600,
                       width=650,
                       font=dict(family="Inter"),  # Définir la police "Inter"
-                      font_size=14)  # Définir la taille du texte à 14))
+                      font_size=14)  # Définir la taille du texte à 14
 
     return fig
 
+# Définition du callback pour mettre à jour le graphique en fonction des filtres
 callback(
     Output('bubble-graph-2', 'figure'),
     Input('viz2-season-filter', 'value')
 )(update_figure)
 
+# Fonction pour générer le HTML de la visualisation
 def get_viz_2_html():
     return html.Div(className='content', children=[
+        # Titre et description de la visualisation
         html.Div(children=[
-            html.H1('🥇 1. Is Olympic Success Reserved for Superpowers?', style={'textAlign': 'center', 'marginBottom': '20px', "fontFamily": "Playfair Display"}),
+            html.H1('🥇 1. Is Olympic Success Reserved for Superpowers?', 
+                    style={'textAlign': 'center', 'marginBottom': '20px', "fontFamily": "Playfair Display"}),
             html.P(
             "Are the same nations always at the top of the podium — and why? "
             "From the Cold War era to modern-day dominance, we explore how wealth, population, and historical presence " \
@@ -99,7 +114,8 @@ def get_viz_2_html():
             style={"textAlign": "justify", "backgroundColor": "#fdfdfd",'marginBottom': '40px',"fontFamily": "Inter"},
             className="viz-description"
             ),
-            html.H2("Total Medals / PIB per Capita ($ USD)", style={"textAlign": "center", "color":"#0085C7","fontFamily": "Playfair Display"}),
+            html.H2("Total Medals / PIB per Capita ($ USD)", 
+                    style={"textAlign": "center", "color":"#0085C7","fontFamily": "Playfair Display"}),
             html.P([
                 "Behind every Olympic medal lies a complex mix of factors that influence success on the global stage. "
                 "While athleticism and training are key, a country’s population size, wealth, and even its climate may "
@@ -117,9 +133,11 @@ def get_viz_2_html():
             )
         ]),
 
-        html.Div(className='viz-container', style={'display': 'flex', 'justifyContent': 'center', 'gap': '40px', 'backgroundColor': 'white'}, children=[
+        # Conteneur pour les graphiques
+        html.Div(className='viz-container', 
+                 style={'display': 'flex', 'justifyContent': 'center', 'gap': '40px', 'backgroundColor': 'white'}, children=[
             
-            # First graph only
+            # Premier graphique
             dcc.Graph(className='graph', figure=fig1, config=dict(
             scrollZoom=False,
             showTips=False,
@@ -128,9 +146,9 @@ def get_viz_2_html():
             displayModeBar=False
             )),
 
-            # Second graph + checkboxes
+            # Deuxième graphique avec les cases à cocher
             html.Div(style={'display': 'flex', 'flexDirection': 'column', 'alignItems': 'center'}, children=[
-            # Checkboxes underneath
+            # Cases à cocher pour filtrer les saisons
             html.Div([
                 dcc.Checklist(
                 id='viz2-season-filter',
@@ -144,6 +162,7 @@ def get_viz_2_html():
                 )
             ], style={'marginBottom': '20px', 'textAlign': 'center'}),
 
+            # Deuxième graphique
             dcc.Graph(id='bubble-graph-2', className='graph', figure=fig2, config=dict(
                 scrollZoom=False,
                 showTips=False,
@@ -154,6 +173,7 @@ def get_viz_2_html():
             ])
         ]),
         
+        # Description des graphiques
         html.Div([
             html.P([
                 "The graph on the left illustrates the number of medals won per Olympic Games, segmented by GDP and categorized by "

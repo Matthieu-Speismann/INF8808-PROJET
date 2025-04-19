@@ -6,14 +6,12 @@ import project.visualisation_1.hover_template as hover
 import os
 
 # Charger le fichier CSV contenant les codes et noms des pays
-path = os.path.join("data", 'Countries_codes_names.csv')
+path = os.path.join("data", 'Countries_codes_names.csv')  # Chemin vers le fichier CSV
 country_codes = pd.read_csv(path, sep=';')  # Lecture du fichier CSV avec les codes et noms des pays
-
 
 def create_multiple_heatmaps(data):
     # Obtenir la liste des sports à partir des clés du dictionnaire `data`
     sports = list(data.keys())
-    # num_sports = len(sports)  # Nombre total de sports
 
     # Définir le nombre de colonnes et de lignes pour les sous-graphiques
     cols = 4  # Nombre de colonnes (modifiable)
@@ -35,8 +33,8 @@ def create_multiple_heatmaps(data):
         df = pd.DataFrame(data[sport])  # Convertir les données du sport en DataFrame
 
         # Calculer la position du subplot (ligne et colonne)
-        row = (i // cols) + 1
-        col = (i % cols) + 1
+        row = (i // cols) + 1  # Ligne du subplot
+        col = (i % cols) + 1  # Colonne du subplot
 
         # Calculer le total des médailles par pays (inclut "Others")
         df['Total'] = df.sum(axis=1, numeric_only=True)
@@ -55,7 +53,7 @@ def create_multiple_heatmaps(data):
         df = df.loc[df.index[::-1]]
 
         # Mapper les codes des pays aux noms complets
-        country_mapping = dict(zip(country_codes['Code'], country_codes['Name']))
+        country_mapping = dict(zip(country_codes['Code'], country_codes['Name']))  # Dictionnaire code -> nom
         y_labels = [country_mapping.get(code, code) for code in df.index]  # Générer les noms complets des pays
 
         # Créer une heatmap pour le sport courant
@@ -111,7 +109,7 @@ def create_multiple_heatmaps(data):
                 color="red",
                 symbol="square-open"  # Carré non rempli
             ),
-            name="Host Country",  # Name in the legend
+            name="Host Country",  # Nom dans la légende
         )
     )
 
