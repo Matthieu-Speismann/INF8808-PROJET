@@ -25,6 +25,23 @@ pays_disponibles = preprocess.pays_dispo  # Liste des pays disponibles, extraite
 # Fonction pour générer le contenu HTML de la visualisation
 def get_viz_5_html():
     return html.Div([
+        html.Div(
+            html.P([
+                "A closer look at Olympic rankings reveals stark differences in athletic performance across countries. "
+                "The United States stands out as a powerhouse, consistently producing top-tier athletes across both Summer and "
+                "Winter Games. In fact, the U.S. holds the number one spot in the Summer Olympics rankings and ranks second in the "
+                "Winter Games — a clear testament to its ability to nurture talent that frequently reaches the podium.",
+                html.Br(), html.Br(),
+                "On the other hand, countries like Canada present a more seasonal profile. While Canada leads the Winter Olympics "
+                "rankings, it is notably absent from the top ranks in the Summer Games. This suggests a strong national focus — and "
+                "success — in winter sports, contrasted by comparatively limited impact during the summer season.",
+            ], style={"textAlign": "justify", "fontFamily": "Inter"}
+            ),
+            className="viz-description"
+        ),
+        # Espacement entre le texte précédent et le prochain titre
+        html.Div(style={"height": "50px"}),
+
         # Titre principal de la visualisation
         html.Div([
             html.H2(
