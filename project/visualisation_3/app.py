@@ -66,7 +66,28 @@ def get_viz_3_html():
             # Graphique lollipop initial
             dcc.Graph(id='lollipop-graph', figure=fig)
         ]),
-        # TODO: Ajouter un bloc de texte explicatif supplémentaire pour la visualisation 3
+        # Section supplémentaire avec des observations sur les tendances olympiques
+        html.Div([
+            html.P([
+                "As expected, the first chart shows that every host country sends more athletes when the Games take place at home — a direct effect of Olympic rules that ease qualification for the host nation.",
+                html.Br(), html.Br(),
+                "But to understand why, we look at the third chart:",
+                html.Br(),
+                "Some countries, like South Korea (Summer) or France (Winter), also show a higher medals per athlete ratio at home — meaning their athletes perform better individually.",
+                html.Br(),
+                "Others, like the United States, show little change in efficiency, suggesting their higher medal counts come more from the larger team size than improved performance.",
+                html.Br(), html.Br(),
+                "Conclusion: Hosting the Olympics usually leads to better results — partly because countries send more athletes, and sometimes because those athletes also perform better."
+            ],
+            style={
+                'textAlign': 'justify',  # Justifier le texte
+                'fontFamily': 'Inter'  # Police d'écriture
+            },
+            className="viz-description"  # Classe CSS pour styliser la description
+            )
+        ],
+        className="centered"  # Classe CSS pour centrer le contenu
+        )
     ])
 
 # Callback pour mettre à jour le graphique en fonction de la saison sélectionnée
