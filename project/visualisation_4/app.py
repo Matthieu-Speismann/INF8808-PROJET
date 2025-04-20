@@ -69,11 +69,27 @@ def get_viz_4_html():
             ),
         ], style={'width': '20%', 'margin-bottom': '20px'}),
 
+        # Section pour la légende
+        html.Div([
+            html.Label("Légende:", style={"fontFamily": "Inter", "fontWeight": "bold"}),  # Étiquette pour la légende
+            html.Div([
+            html.Span(style={'display': 'inline-block', 'width': '15px', 'height': '15px', 
+                 'backgroundColor': 'red', 'borderRadius': '50%', 'marginRight': '10px'}),
+            html.Span("Athlète pour la discipline sélectionnée", style={"fontFamily": "Inter"})  # Texte pour le cercle rouge
+            ], style={'display': 'flex', 'alignItems': 'center', 'marginBottom': '10px'}),
+            html.Div([
+            html.Span(style={'display': 'inline-block', 'width': '15px', 'height': '15px', 
+                 'backgroundColor': 'blue', 'borderRadius': '50%', 'marginRight': '10px'}),
+            html.Span("Athlète pour une autre discipline", style={"fontFamily": "Inter"})  # Texte pour le cercle bleu
+            ], style={'display': 'flex', 'alignItems': 'center'})
+        ], style={'margin': '20px 0', 'textAlign': 'left', 'float': 'left'}),
+
         # Ligne de séparation
         html.Hr(),
         # Zone de texte pour afficher les résultats
         html.Div(id='output-text', style={'whiteSpace': 'pre-line', 'fontFamily': 'monospace'})
-    ], className="centered")  # Classe CSS pour centrer le contenu
+    ], 
+    className="centered")  # Classe CSS pour centrer le contenu
 
 # Callback pour mettre à jour la liste des disciplines en fonction de la saison sélectionnée
 @callback(
