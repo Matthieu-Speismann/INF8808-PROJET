@@ -42,8 +42,6 @@ Pour exécuter l'application en local :
    python app.py
    ```
 
-L'application est également disponible sur `https://olympic-games-team16-ce8602bed91e.herokuapp.com/#viz4-section` dans votre navigateur.
-
 ## Technologies utilisées
 
 - Python 3.10+
